@@ -19,7 +19,7 @@ import org.springframework.security.authentication.AuthenticationProvider;
 
 public class SecurityConfig {   
     
-    private JwtFilter jwtAuthFilter;
+    private final JwtFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
 
     @Bean
@@ -44,6 +44,8 @@ public class SecurityConfig {
         )
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authenticationProvider(authenticationProvider)
-        .addFilter(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+        
+        return http.build();
     }
 }

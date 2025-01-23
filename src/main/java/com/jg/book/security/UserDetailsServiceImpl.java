@@ -1,6 +1,5 @@
 package com.jg.book.security;
 
-import org.springframework.data.convert.ReadingConverter;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

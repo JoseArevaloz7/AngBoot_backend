@@ -52,16 +52,36 @@ public class JwtService {
 
     public boolean isTokenValid(String token, UserDetails userDetails){
         final String userName = extractUsername(token);
+
+        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }
+                
+    private boolean isTokenExpired(String token) {
+        return extractExpiration(token).before(new Date());
     }
         
+    private Date extractExpiration(String token) {
+        return extractClamin(token, Claims::getExpiration);
+    } 
+
     public String extractUsername(String token) {
         return extractClamin(token, Claims::getSubject);
     }
                 
     private <T> T extractClamin(String token, Function<Claims, T> claimsResolver) {
-        final claims = extractAllClaims(token);
+        final Claims claims = extractAllClaims(token);
+        return claimsResolver.apply(claims);
     }
-        
+            
+    private Claims extractAllClaims(String token) {
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
     private Key getSignInKey() {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
