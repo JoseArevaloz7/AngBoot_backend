@@ -38,7 +38,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
+@Table(name = "\"user\"")
 @EntityListeners(AuditingEntityListener.class)
 public class User implements UserDetails, Principal{
     
@@ -66,6 +66,10 @@ public class User implements UserDetails, Principal{
     private LocalDateTime lastModifiedDate;
     
     @Override
+    public String getPassword() {
+        return password;
+    }
+    @Override
     public String getName() {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'getName'");
@@ -77,15 +81,8 @@ public class User implements UserDetails, Principal{
     }
 
     @Override
-    public String getPassword() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getPassword'");
-    }
-
-    @Override
     public String getUsername() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getUsername'");
+        return this.email;
     }
 
     @Override
@@ -142,7 +139,7 @@ public class User implements UserDetails, Principal{
         return Principal.super.implies(arg0);
     }
 
-    private String fullName(){
+    public String getFullName(){
         return firstName + lastName;
     }
 

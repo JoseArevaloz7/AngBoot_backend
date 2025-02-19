@@ -28,6 +28,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -45,12 +46,13 @@ public class Token {
     @Id
     @GeneratedValue
     private Integer id;
-    private String Token;
+
+    private String token;
     private LocalDateTime expiresAt;
     private LocalDateTime createdAt;
     private LocalDateTime validatedAt;
 
-    @ManyToAny
+    @ManyToOne
     @JoinColumn(name = "userId", nullable = false)
     private User user; 
 }
