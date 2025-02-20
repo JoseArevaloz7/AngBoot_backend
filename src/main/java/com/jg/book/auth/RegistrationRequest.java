@@ -22,13 +22,10 @@ public class RegistrationRequest {
     
     @NotEmpty(message = "Last name is required")
     @NotBlank(message = "Last name cannot be blank")
-    
+    private String lastName;
+
     @NotEmpty(message = "Email is required")
     @NotBlank(message = "Email cannot be blank")
-    private String lastName;
-    
-    @NotEmpty(message = "Date of birth is required")
-    @NotBlank(message = "Date of birth cannot be blank")
     @Email(message = "Email must be valid") 
     private String email;
     
