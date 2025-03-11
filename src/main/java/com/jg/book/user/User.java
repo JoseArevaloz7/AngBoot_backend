@@ -17,6 +17,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.jg.book.book.Book;
+import com.jg.book.history.BookTransactionHistory;
 import com.jg.book.role.Role;
 
 import jakarta.persistence.Column;
@@ -62,6 +63,9 @@ public class User implements UserDetails, Principal{
 
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
+
+    @OneToMany(mappedBy = "user")
+    private List<BookTransactionHistory> histories;
 
     @CreatedDate
     @Column(nullable = false, updatable = false)

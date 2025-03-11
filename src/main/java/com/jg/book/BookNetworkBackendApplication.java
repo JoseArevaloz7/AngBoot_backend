@@ -11,7 +11,7 @@ import com.jg.book.role.Role;
 import com.jg.book.role.RoleRepository;
 
 @SpringBootApplication
-@EnableJpaAuditing
+@EnableJpaAuditing(auditorAwareRef = "auditorAware")
 @EnableAsync
 public class BookNetworkBackendApplication {
 
