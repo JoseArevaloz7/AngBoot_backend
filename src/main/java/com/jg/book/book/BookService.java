@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.jg.book.user.User;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -24,6 +25,8 @@ public class BookService {
     }
 
     public BookResponse findById(Integer bookId) {
-        return bookMaper.toBookResponse(bookRepository.findById(bookId).get());
+        return bookRepository.findById(bookId)
+            .map(bookMaper::toBookResponse)
+            .orElseThrow(() -> new EntityNotFoundException("Not book found with id: " + bookId));
     }
 }

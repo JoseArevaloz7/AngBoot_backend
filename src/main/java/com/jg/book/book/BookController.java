@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
-
-
 @RestController
 @RequestMapping("books")
 @RequiredArgsConstructor
@@ -39,6 +37,15 @@ public class BookController {
     public ResponseEntity<BookResponse> findBookById(@PathVariable("book-id") Integer bookId) {
         
         return ResponseEntity.ok(bookService.findById(bookId));
+    }
+    
+    @GetMapping("path")
+    public ResponseEntity<PageResponse<BookResponse>> findAllBooks(
+        @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
+        @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+        Authentication connectedUser
+    ) {
+        return ResponseEntity.ok(bookService.findAllBooks(page, size, connectedUser));
     }
     
 }    
